@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
             .then(response => response.json())
             .then(data => {
                 let artistTable = document.getElementById("artistTable").getElementsByTagName("tbody")[0];
-                artistTable.innerHTML = ""; // Clear previous rows
+                artistTable.innerHTML = ""; 
 
                 if (data.length > 0) {
                     data.forEach(artist => {
