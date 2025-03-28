@@ -2,7 +2,7 @@
     include 'db_connect.php';
 
     if (isset($_GET['fetch'])) {
-        $sql = "SELECT ArtistID, Name, DateOfBirth, Gender, ContactInfo, AvailabilityStatus FROM Artist"; // Adjust as needed
+        $sql = "SELECT ArtistID, Name, DateOfBirth, Gender, ContactInfo, AvailabilityStatus FROM Artist"; 
         $result = mysqli_query($conn, $sql);
 
         $artists = [];
@@ -54,7 +54,6 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Artist rows will be dynamically inserted here -->
             </tbody>
         </table>
     </main>
