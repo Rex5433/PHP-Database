@@ -107,20 +107,21 @@ tr:hover {
 }
 
 button.add-btn {
-    background-color: #43B581; 
+    background-color: #7289DA; 
 }
 
 button.add-btn:hover {
-    background-color: #38A169;
+    background-color: #5B6E8E;
 }
 
 button.edit-btn {
-    background-color: #FF9F00; 
+    background-color: #7289DA; 
 }
 
 button.edit-btn:hover {
-    background-color: #FF7F00;
+    background-color: #5B6E8E; 
 }
+
 
 button.delete-btn {
     background-color: #F04747; 
@@ -157,6 +158,12 @@ footer {
     position: fixed;
     width: 100%;
     bottom: 0;
+}
+
+h2 {
+    text-align: center; 
+    color: #FFFFFF; 
+    margin-top: 40px;
 }
 
 @media (max-width: 768px) {
