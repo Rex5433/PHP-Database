@@ -1,105 +1,111 @@
 <?php
 include 'db_connect.php';
 
-// --- ADD NEW REPORT ---
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_report'])) {
-    $contractID = $_POST['contract_id'];
-    $earning = $_POST['earning'];
-
-    // Check if the ContractID exists in the CONTRACT table
-    $checkContract = $conn->prepare("SELECT COUNT(*) FROM CONTRACT WHERE ContractID = ?");
-    $checkContract->bind_param("i", $contractID);
-    $checkContract->execute();
-    $checkContract->bind_result($contractExists);
-    $checkContract->fetch();
-    $checkContract->close();
-
-    if ($contractExists > 0) {
-        // Insert into FINANCE if the ContractID exists
-        $stmt = $conn->prepare("INSERT INTO FINANCE (ContractID, Earning) VALUES (?, ?)");
-        $stmt->bind_param("id", $contractID, $earning);
-
-        if ($stmt->execute()) {
-            $message = "Financial report added successfully!";
-        } else {
-            $message = "Error adding report: " . $stmt->error;
-        }
-        $stmt->close();
-    } else {
-        $message = "Error: ContractID does not exist!";
-    }
-}
-
-// --- FETCH ALL REPORTS ---
-$sql = "SELECT TransactionID, ContractID, Earning FROM FINANCE";
+$sql = "SELECT * FROM FINANCE";
 $result = $conn->query($sql);
-
-$reports = [];
-if ($result && $result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $reports[] = $row;
-    }
-}
-
-$conn->close();
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Financial Reports</title>
+    <link rel="stylesheet" href="financials.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <h1>Manage Financial Reports</h1>
+    <header>
+        <h1>Forondo Artist Management Excellence (FAME)</h1>
+        <nav>
+            <a href="index.php">Home</a>
+            <a href="artists.php">Artists</a>
+            <a href="event_booking.php">Book an Event</a>
+            <a href="admin.php">Admin</a>
+        </nav>
+    </header>
 
-    <?php if (isset($message)) { ?>
-        <p><strong><?= $message; ?></strong></p>
-    <?php } ?>
+    <main>
+        <h2>Financial Reports</h2>
 
-    <!-- Add New Report -->
-    <h2>Add New Financial Report</h2>
-    <form action="financials.php" method="POST">
-        <label>Contract ID:</label>
-        <input type="number" name="contract_id" required><br>
+        <h2>Add/Edit Finance Record</h2>
+        <form id="financeForm">
+            <input type="hidden" id="transaction_id" name="transaction_id">
 
-        <label>Earning:</label>
-        <input type="number" step="0.01" name="earning" required><br>
+            <label for="contract_id">Contract ID:</label>
+            <input type="number" id="contract_id" name="contract_id" placeholder="Enter contract ID" required>
 
-        <button type="submit" name="add_report">Add Report</button>
-    </form>
+            <label for="earning">Earnings:</label>
+            <input type="number" step="0.01" id="earning" name="earning" placeholder="Enter earnings" required>
 
-    <!-- Existing Reports -->
-    <h2>Existing Financial Reports</h2>
-    <table border="1">
-        <tr>
-            <th>Transaction ID</th>
-            <th>Contract ID</th>
-            <th>Earning</th>
-            <th>Actions</th>
-        </tr>
-        <?php foreach ($reports as $report) { ?>
-            <tr>
-                <td><?= $report['TransactionID']; ?></td>
-                <td><?= $report['ContractID']; ?></td>
-                <td><?= $report['Earning']; ?></td>
-                <td>
-                    <!-- Edit -->
-                    <form action="financials.php" method="POST" style="display:inline;">
-                        <input type="hidden" name="transaction_id" value="<?= $report['TransactionID']; ?>">
-                        <input type="number" name="contract_id" value="<?= $report['ContractID']; ?>" required>
-                        <input type="number" step="0.01" name="earning" value="<?= $report['Earning']; ?>" required>
-                        <button type="submit" name="edit_report">Update</button>
-                    </form>
+            <label for="tax_deduction">Tax Deduction:</label>
+            <input type="number" step="0.01" id="tax_deduction" name="tax_deduction" placeholder="Enter tax deduction" required>
 
-                    <!-- Delete -->
-                    <form action="financials.php" method="POST" style="display:inline;">
-                        <input type="hidden" name="transaction_id" value="<?= $report['TransactionID']; ?>">
-                        <button type="submit" name="delete_report" onclick="return confirm('Are you sure you want to delete this report?');">Delete</button>
-                    </form>
-                </td>
-            </tr>
-        <?php } ?>
-    </table>
+            <label for="final_payment">Final Payment:</label>
+            <input type="number" step="0.01" id="final_payment" name="final_payment" placeholder="Enter final payment" required>
+
+            <button type="submit" name="add_finance" class="add-btn">Add Finance Record</button>
+            <button type="submit" name="edit_finance" class="edit-btn">Edit Finance Record</button>
+        </form>
+
+        <h2>Finance Records</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Transaction ID</th>
+                    <th>Contract ID</th>
+                    <th>Earnings</th>
+                    <th>Tax Deduction</th>
+                    <th>Final Payment</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="financeTable"></tbody>
+        </table>
+    </main>
+
+    <script>
+        $(document).ready(function() {
+            loadFinance();
+
+            $("#financeForm button").click(function(e) {
+                e.preventDefault();
+                let action = $(this).attr("name");
+                let formData = $("#financeForm").serialize() + "&" + action + "=true";
+
+                $.post("financials_functions.php", formData, function(response) {
+                    alert(response);
+                    loadFinance();
+                    $("#financeForm")[0].reset();
+                    $("#transaction_id").val("");
+                });
+            });
+
+            $(document).on("click", ".editBtn", function() {
+                let finance = $(this).data();
+                $("#transaction_id").val(finance.id);
+                $("#contract_id").val(finance.contract_id);
+                $("#earning").val(finance.earning);
+                $("#tax_deduction").val(finance.tax_deduction);
+                $("#final_payment").val(finance.final_payment);
+            });
+
+            $(document).on("click", ".deleteBtn", function() {
+                if (!confirm("Are you sure?")) return;
+                let transactionId = $(this).data("id");
+
+                $.post("financials_functions.php", { delete_finance: true, transaction_id: transactionId }, function(response) {
+                    alert(response);
+                    loadFinance();
+                });
+            });
+
+            function loadFinance() {
+                $.get("financials_functions.php", { fetch_finance: true }, function(data) {
+                    $("#financeTable").html(data);
+                });
+            }
+        });
+    </script>
 </body>
 </html>
