@@ -2,7 +2,7 @@
     include 'db_connect.php';
 
     if (isset($_GET['fetch'])) {
-        $sql = "SELECT ArtistID, Name, DateOfBirth, Gender, ContactInfo, AvailabilityStatus FROM Artist"; // Adjust as needed
+        $sql = "SELECT ArtistID, Name, DateOfBirth, Gender, ContactInfo, AvailabilityStatus FROM Artist"; 
         $result = mysqli_query($conn, $sql);
 
         $artists = [];
@@ -24,7 +24,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel</title>
-    <link rel="stylesheet" href="admin.css"> <!-- Link to the external CSS file -->
+    <link rel="stylesheet" href="admin.css"> 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body class="admin-page">
@@ -84,18 +84,18 @@
 
     <script>
         $(document).ready(function() {
-            loadArtists(); // Load artists when the page loads
+            loadArtists(); 
 
             $("#artistForm button").click(function(e) {
                 e.preventDefault();
-                let action = $(this).attr("name"); // Get the button name (add_artist or edit_artist)
-                let formData = $("#artistForm").serialize() + "&" + action + "=true"; // Append action
+                let action = $(this).attr("name"); 
+                let formData = $("#artistForm").serialize() + "&" + action + "=true"; 
 
                 $.post("admin_functions.php", formData, function(response) {
-                    alert(response); // Display success or error message
-                    loadArtists(); // Refresh the table
-                    $("#artistForm")[0].reset(); // Clear form
-                    $("#artist_id").val(""); // Reset hidden input
+                    alert(response);
+                    loadArtists();
+                    $("#artistForm")[0].reset();
+                    $("#artist_id").val("");
                 });
             });
 
