@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
-$username = "root"; // Change if needed
-$password = ""; // Change if needed
+$username = "root"; 
+$password = ""; 
 $database = "teamwork7";
 
 $conn = mysqli_connect($servername, $username, $password, $database);
