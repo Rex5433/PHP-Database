@@ -8,37 +8,49 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <h1>Event Booking Management</h1>
+    <header>
+        <h1>Forondo Artist Management Excellence (FAME)</h1>
+        <nav>
+            <a href="index.php">Home</a>
+            <a href="artists.php">Artists</a>
+            <a href="admin.php">Admin</a>
+            <a href="financials.php">Financial Reports</a>
+        </nav>
+    </header>
 
-    <h2>Book an Event</h2>
-    <form id="eventForm">
-        <input type="hidden" id="event_id" name="event_id">
-        
-        <label for="event">Event Name:</label>
-        <input type="text" id="event" name="event" placeholder="Enter event name" required>
+    <main>
+        <h2>Event Booking Management</h2>
 
-        <label for="date">Event Date:</label>
-        <input type="date" id="date" name="date" required>
+        <h2>Book an Event</h2>
+        <form id="eventForm">
+            <input type="hidden" id="event_id" name="event_id">
 
-        <label for="venue">Venue ID:</label>
-        <input type="number" id="venue" name="venue" placeholder="Enter venue ID" required>
+            <label for="event">Event Name:</label>
+            <input type="text" id="event" name="event" placeholder="Enter event name" required>
 
-        <label for="organizer">Organizer ID:</label>
-        <input type="number" id="organizer" name="organizer" placeholder="Enter organizer ID" required>
+            <label for="date">Event Date:</label>
+            <input type="date" id="date" name="date" required>
 
-        <button type="submit" name="book_event" class="book-btn">Book Event</button>
-        <button type="submit" name="edit_event" class="edit-btn">Edit Event</button>
-    </form>
+            <label for="venue">Venue ID:</label>
+            <input type="number" id="venue" name="venue" placeholder="Enter venue ID" required>
 
-    <h2>Booked Events</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th><th>Event Name</th><th>Date</th><th>Venue ID</th><th>Organizer ID</th><th>Actions</th>
-            </tr>
-        </thead>
-        <tbody id="eventTable"></tbody>
-    </table>
+            <label for="organizer">Organizer ID:</label>
+            <input type="number" id="organizer" name="organizer" placeholder="Enter organizer ID" required>
+
+            <button type="submit" name="book_event" class="book-btn">Book Event</button>
+            <button type="submit" name="edit_event" class="edit-btn">Edit Event</button>
+        </form>
+
+        <h2>Booked Events</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th><th>Event Name</th><th>Date</th><th>Venue ID</th><th>Organizer ID</th><th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="eventTable"></tbody>
+        </table>
+    </main>
 
     <script>
         $(document).ready(function() {
