@@ -3,66 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book an Event</title>
-    <link rel="stylesheet" href="bookevent.css">
+    <title>Event Booking</title>
+    <link rel="stylesheet" href="booking.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <h1>Manage Events</h1>
+    <h1>Event Booking Management</h1>
 
-    <form action="book_event.php" method="POST">
-        <h2>Book a New Event</h2>
+    <h2>Book an Event</h2>
+    <form id="eventForm">
+        <input type="hidden" id="event_id" name="event_id">
+        
         <label for="event">Event Name:</label>
-        <input type="text" id="event" name="event" required><br>
+        <input type="text" id="event" name="event" placeholder="Enter event name" required>
 
         <label for="date">Event Date:</label>
-        <input type="date" id="date" name="date" required><br>
+        <input type="date" id="date" name="date" required>
 
-        <input type="hidden" name="event_id" id="event_id">
-        
-        <button type="submit" name="add_event">Book Event</button>
-        <button type="submit" name="edit_event">Edit Event</button>
+        <label for="venue">Venue ID:</label>
+        <input type="number" id="venue" name="venue" placeholder="Enter venue ID" required>
+
+        <label for="organizer">Organizer ID:</label>
+        <input type="number" id="organizer" name="organizer" placeholder="Enter organizer ID" required>
+
+        <button type="submit" name="book_event" class="book-btn">Book Event</button>
+        <button type="submit" name="edit_event" class="edit-btn">Edit Event</button>
     </form>
 
-    <h2>Existing Events</h2>
-    <table border="1">
+    <h2>Booked Events</h2>
+    <table>
         <thead>
             <tr>
-                <th>Event Name</th>
-                <th>Event Date</th>
-                <th>Actions</th>
+                <th>ID</th><th>Event Name</th><th>Date</th><th>Venue ID</th><th>Organizer ID</th><th>Actions</th>
             </tr>
         </thead>
-        <tbody>
-            <?php if (!empty($events)): ?>
-                <?php foreach ($events as $event): ?>
-                <tr>
-                    <td><?php echo $event['EventName']; ?></td>
-                    <td><?php echo $event['EventDate']; ?></td>
-                    <td>
-
-                        <button type="button" onclick="editEvent(<?php echo $event['EventID']; ?>, '<?php echo $event['EventName']; ?>', '<?php echo $event['EventDate']; ?>')">Edit</button>
-
-                        <form action="book_event.php" method="POST" style="display:inline;">
-                            <input type="hidden" name="event_id" value="<?php echo $event['EventID']; ?>">
-                            <button type="submit" name="delete_event" onclick="return confirm('Are you sure you want to delete this event?')">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <tr>
-                    <td colspan="3">No events found.</td>
-                </tr>
-            <?php endif; ?>
-        </tbody>
+        <tbody id="eventTable"></tbody>
     </table>
 
     <script>
-        function editEvent(eventID, eventName, eventDate) {
-            document.getElementById('event').value = eventName;
-            document.getElementById('date').value = eventDate;
-            document.getElementById('event_id').value = eventID;
-        }
+        $(document).ready(function() {
+            loadEvents();
+
+            $("#eventForm button").click(function(e) {
+                e.preventDefault();
+                let action = $(this).attr("name");
+                let formData = $("#eventForm").serialize() + "&" + action + "=true";
+
+                $.post("event_functions.php", formData, function(response) {
+                    alert(response);
+                    loadEvents();
+                    $("#eventForm")[0].reset();
+                    $("#event_id").val("");
+                });
+            });
+
+            $(document).on("click", ".editBtn", function() {
+                let event = $(this).data();
+                $("#event_id").val(event.id);
+                $("#event").val(event.name);
+                $("#date").val(event.date);
+                $("#venue").val(event.venue);
+                $("#organizer").val(event.organizer);
+            });
+
+            $(document).on("click", ".deleteBtn", function() {
+                if (!confirm("Are you sure?")) return;
+                let eventId = $(this).data("id");
+
+                $.post("event_functions.php", { delete_event: true, event_id: eventId }, function(response) {
+                    alert(response);
+                    loadEvents();
+                });
+            });
+
+            function loadEvents() {
+                $.get("event_functions.php", { fetch_events: true }, function(data) {
+                    $("#eventTable").html(data);
+                });
+            }
+        });
     </script>
 </body>
 </html>
