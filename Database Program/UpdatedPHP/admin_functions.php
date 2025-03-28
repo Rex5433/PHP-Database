@@ -1,7 +1,6 @@
 <?php
 include 'db_connect.php';
 
-// Fetch artists (for AJAX table refresh)
 if (isset($_GET['fetch_artists'])) {
     $sql = "SELECT * FROM ARTIST";
     $result = $conn->query($sql);
@@ -32,7 +31,6 @@ if (isset($_GET['fetch_artists'])) {
     exit;
 }
 
-// Add artist
 if (isset($_POST['add_artist'])) {
     $name = $_POST['name'];
     $contact = $_POST['contact'];
@@ -47,7 +45,6 @@ if (isset($_POST['add_artist'])) {
     exit;
 }
 
-// Edit artist
 if (isset($_POST['edit_artist'])) {
     $id = $_POST['artist_id'];
     $name = $_POST['name'];
@@ -64,7 +61,6 @@ if (isset($_POST['edit_artist'])) {
     exit;
 }
 
-// Delete artist
 if (isset($_POST['delete_artist'])) {
     $id = $_POST['artist_id'];
 
