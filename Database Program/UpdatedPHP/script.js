@@ -12,8 +12,10 @@ document.addEventListener("DOMContentLoaded", function() {
                         let row = artistTable.insertRow();
 
                         row.innerHTML = `
-                            <td>${artist.Name}</td>
                             <td>${artist.ArtistID}</td>
+                            <td>${artist.Name}</td>
+                            <td>${artist.DateOfBirth}</td>
+                            <td>${artist.Gender}</td>
                             <td>${artist.ContactInfo}</td>
                             <td>${artist.AvailabilityStatus}</td>
                         `;
