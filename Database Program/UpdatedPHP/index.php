@@ -2,7 +2,7 @@
     include 'db_connect.php';
 
     if (isset($_GET['fetch'])) {
-        $sql = "SELECT ArtistID, Name, ContactInfo, AvailabilityStatus FROM Artist"; // Adjust as needed
+        $sql = "SELECT ArtistID, Name, DateOfBirth, Gender, ContactInfo, AvailabilityStatus FROM Artist"; // Adjust as needed
         $result = mysqli_query($conn, $sql);
 
         $artists = [];
@@ -45,8 +45,10 @@
         <table id="artistTable">
             <thead>
                 <tr>
+                    <th>Artist ID</th>
                     <th>Name</th>
-                    <th>ID</th>
+                    <th>Date of Birth</th>
+                    <th>Gender</th>
                     <th>Contact Info</th>
                     <th>Availability Status</th>
                 </tr>
