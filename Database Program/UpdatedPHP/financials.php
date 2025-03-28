@@ -1,5 +1,5 @@
 <?php
-include '../php/db_connect.php';
+include 'db_connect.php';
 
 $sql = "SELECT PaymentID, ArtistID, Amount, PaymentStatus FROM PAYMENT";
 $result = $conn->query($sql);
