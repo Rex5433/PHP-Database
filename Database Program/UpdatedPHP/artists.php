@@ -1,7 +1,7 @@
 <?php
 include 'db_connect.php';
 
-$sql = "SELECT ArtistID, Name, ContactInfo, AvailabilityStatus FROM ARTIST"; // Added AvailabilityStatus
+$sql = "SELECT ArtistID, Name, ContactInfo, AvailabilityStatus FROM ARTIST"; 
 $result = $conn->query($sql);
 ?>
 
@@ -11,7 +11,7 @@ $result = $conn->query($sql);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Artists</title>
-    <link rel="stylesheet" href="artists.css"> <!-- Include CSS for styling -->
+    <link rel="stylesheet" href="artists.css">
 </head>
 <body class="artists-page">
     <header>
