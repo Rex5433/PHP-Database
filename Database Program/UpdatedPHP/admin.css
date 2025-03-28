@@ -1,82 +1,142 @@
 body {
     font-family: Arial, sans-serif;
-    margin: 20px;
-    padding: 20px;
+    margin: 0;
+    padding: 0;
+    background-color: #36393F; 
+    color: #FFFFFF; 
 }
 
-h1, h2 {
+header {
+    background-color: #2F3136; 
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid #4F535C;
+}
+
+header h1 {
+    margin: 0;
+    color: #7289DA; 
+}
+
+nav a {
+    color: #B9BBBE; 
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #7289DA; 
+}
+
+main {
+    padding: 30px;
     text-align: center;
 }
 
 form {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background: #f9f9f9;
-}
-
-label {
-    font-weight: bold;
-    display: block;
-    margin-top: 10px;
-}
-
-input, select, button {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
+    background-color: #40444B; 
+    padding: 20px;
     border-radius: 5px;
+    margin-top: 20px;
+    display: inline-block;
+    width: 100%;
+    max-width: 600px;
 }
 
-button {
-    margin-top: 15px;
+form input, form select, form button {
+    margin: 10px 0;
+    padding: 10px;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #4F535C;
+    background-color: #2F3136; 
+    color: #FFFFFF;
+}
+
+form input[type="text"], form input[type="date"], form select {
+    background-color: #40444B; 
+}
+
+form button {
+    background-color: #7289DA; 
+    color: white;
+    border: none;
     cursor: pointer;
-    font-size: 16px;
 }
 
-.add-btn {
-    background-color: #4CAF50;
-    color: white;
-}
-
-.edit-btn {
-    background-color: #FFA500;
-    color: white;
+form button:hover {
+    background-color: #5B6EAE; 
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+    border: 1px solid #4F535C;
 }
 
 th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
+    padding: 12px;
     text-align: center;
+    border: 1px solid #4F535C;
 }
 
 th {
-    background-color: #f2f2f2;
+    background-color: #2F3136;
+    color: #B9BBBE;
 }
 
-.editBtn {
-    background-color: #FFA500;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 4px;
+td {
+    background-color: #40444B; 
+    color: #FFFFFF;
 }
 
-.deleteBtn {
-    background-color: #d9534f;
+tr:hover {
+    background-color: #7289DA;
     color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 4px;
+}
+
+button.editBtn {
+    background-color: #43B581; 
+    color: white;
+}
+
+button.editBtn:hover {
+    background-color: #36A152; 
+}
+
+button.deleteBtn {
+    background-color: #F04747; 
+    color: white;
+}
+
+button.deleteBtn:hover {
+    background-color: #E03C3C; 
+}
+
+footer {
+    background-color: #2F3136;
+    padding: 10px;
+    text-align: center;
+    color: #B9BBBE;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+@media (max-width: 768px) {
+    table {
+        font-size: 14px;
+    }
+
+    nav a {
+        display: block;
+        margin: 5px 0;
+    }
+
+    button {
+        width: 100%;
+        padding: 15px;
+    }
 }
