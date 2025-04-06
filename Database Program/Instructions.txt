@@ -1,0 +1,5 @@
+1. Start up XAMPP
+2. Start both Apache and MYSQL
+  * If the program doesn't run, end task on MYSQL
+3. Click admin on XAMPP to pull up MYPHPADMIN
+4. Go to localhost/Database/index.php on your browser to run the program. The program runs from the MYPHP folder 'C:\xampp\htdocs\Database' on the test machine.
