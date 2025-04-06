@@ -4,3 +4,4 @@
 3. Click admin on XAMPP to pull up MYPHPADMIN
 4. Go to localhost/Database/index.php on your browser to run the program. The program is located in the folder 'C:\xampp\htdocs\Database\index.php' on the test machine.
 5. To run the program, enter 'localhost/Database/index.php'
+  * When running the program and it doesn't update, press ctrl + shift + r to refresh the website and clear the cache.
